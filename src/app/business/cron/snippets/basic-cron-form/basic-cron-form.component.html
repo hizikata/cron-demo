@@ -1,0 +1,67 @@
+<form nz-form [formGroup]="editForm" (ngSubmit)="submitCronDataItemDto($event)" nzLayout="horizontal">
+  <!-- <nz-radio-group [ngModel]="cronType">
+    <label nz-radio [ngStyle]="style" nzValue="every">
+      每一秒钟
+    </label>
+    <label nz-radio [ngStyle]='style' nzValue="interval">
+      每隔秒执行 从秒开始
+    </label>
+  </nz-radio-group> -->
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" nzSpan='3'>
+      <label nz-checkbox></label>
+    </nz-form-label>
+    <nz-form-control nzSpan="14">
+      <nz-form-text>
+        每一秒钟
+      </nz-form-text>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" nzSpan="3">
+      <label nz-checkbox></label>
+    </nz-form-label>
+    <nz-form-control nzSpan="14">
+      <span>每隔 &nbsp;</span>
+      <nz-input-number formControlName='incrementStart' nzMin=1 [nzMax]='nzMax'>
+      </nz-input-number>
+      <span>执行 &nbsp;&nbsp;从第</span>
+      <nz-input-number formControlName='incrementInterval' nzMin=1 [nzMax]='nzMax'>
+      </nz-input-number>
+      <span>开始</span>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" nzSpan="3">
+      <label nz-checkbox></label>
+    </nz-form-label>
+    <nz-form-control nzSpan="14">
+      <div>
+        <span>具体秒数(可多选) &nbsp;</span>
+        <nz-select formControlName='specifyArray' name='specifyArray' nzPlaceHolder='点击选择' nzMode="multiple"
+          nzAllowClear nzShowSearch>
+          <nz-option *ngFor='let item of dataset' [nzLabel]='item' [nzValue]='item'>
+          </nz-option>
+        </nz-select>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" nzSpan="3">
+      <label nz-checkbox></label>
+    </nz-form-label>
+    <nz-form-control nzSpan="14">
+      <span>周期从 &nbsp;</span>
+      <nz-input-number formControlName='rangeStart' nzMin=1 [nzMax]='nzMax'>
+      </nz-input-number>
+      <span>&nbsp;到&nbsp;</span>
+      <nz-input-number formControlName='rangeEnd' nzMin=1 [nzMax]='nzMax'>
+      </nz-input-number>
+      <span>秒</span>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

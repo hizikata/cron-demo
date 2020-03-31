@@ -1,0 +1,66 @@
+@bc_color :#eeeeee; // 北京
+@basic_span: 4px;
+
+.whole-area {
+  background-color: @bc_color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cron {
+  min-width: 600px;
+  min-height: 400px;
+  text-align: center;
+
+  h1 {
+    font-size: 50px;
+  }
+
+  &_input {
+    height: 42px;
+    line-height: 42px;
+    font-size: 1.5rem;
+  }
+
+  &_tabs {
+    margin-top: @basic_span;
+
+    // border: 1px solid grey;
+    &_tabContent {
+      min-height: 240px;
+      padding-bottom: @basic_span;
+    }
+  }
+
+  :host {
+    background: #f5f5f5;
+    overflow: hidden;
+    padding: 24px;
+    display: block;
+  }
+
+  .card-container ::ng-deep .ant-tabs-card .ant-tabs-content {
+    height: 120px;
+    margin-top: -16px;
+  }
+
+  .card-container ::ng-deep .ant-tabs-card .ant-tabs-content .ant-tabs-tabpane {
+    background: #fff;
+    padding: 16px;
+  }
+
+  .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar {
+    border-color: #fff;
+  }
+
+  .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  .card-container ::ng-deep .ant-tabs-card .ant-tabs-bar .ant-tabs-tab-active {
+    border-color: #fff;
+    background: #fff;
+  }
+}

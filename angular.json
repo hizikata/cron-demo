@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "cron-demo": {
@@ -25,7 +25,12 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "src/styles.less"
@@ -123,6 +128,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "cron-demo"
+    }
+  },
+  "defaultProject": "cron-demo",
+  "cli": {
+    "analytics": "79fd8d48-46e0-43ec-8244-83c3e349068f"
+  }
 }

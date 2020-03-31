@@ -1,0 +1,65 @@
+<div class='whole-area'>
+  <div class='cron'>
+    <h1>ng-cron</h1>
+    <input class='cron_input' nz-input [(ngModel)]="cronExpress" id="cronExpress" name="cronExpress"
+      placeholder="* * * * * ? *">
+    <div class='cron_tabs card-container'>
+      <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+        <nz-tab [nzTitle]="secondTitleTpl">
+          <ng-template #secondTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>秒</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+            <app-basic-cron-form></app-basic-cron-form>
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="minuteTitleTpl">
+          <ng-template #minuteTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>分</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="hourTitleTpl">
+          <ng-template #hourTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>时</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="dayTitleTpl">
+          <ng-template #dayTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>天</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="monthTitleTpl">
+          <ng-template #monthTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>月</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="yearTitleTpl">
+          <ng-template #yearTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>年</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+
+          </div>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+</div>
