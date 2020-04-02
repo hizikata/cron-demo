@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-business-factory',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusinessFactoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public router: Router,
+    public activedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    if (!this.activedRoute.firstChild) {
+      this.router.navigate(['./cron'], { relativeTo: this.activedRoute });
+    }
   }
 
 }

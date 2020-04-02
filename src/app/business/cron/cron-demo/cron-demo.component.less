@@ -5,16 +5,19 @@
   background-color: @bc_color;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .cron {
+  overflow: hidden;
+
   min-width: 600px;
   min-height: 400px;
-  text-align: center;
+  margin-top: 100px;
 
   h1 {
     font-size: 50px;
+    text-align: center;
   }
 
   &_input {
@@ -25,12 +28,24 @@
 
   &_tabs {
     margin-top: @basic_span;
+    background-color: #f5f5f5;
 
     // border: 1px solid grey;
     &_tabContent {
       min-height: 240px;
       padding-bottom: @basic_span;
     }
+
+    &_bottom {
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      padding: 2*@basic_span 0px;
+    }
+  }
+
+  [nz-button] {
+    margin-right: 2*@basic_span;
   }
 
   :host {
@@ -63,4 +78,10 @@
     border-color: #fff;
     background: #fff;
   }
+
+  // 取消form下方用于验证的margin
+  .card-container ::ng-deep.ant-form-item {
+    margin-bottom: @basic_span;
+  }
+
 }

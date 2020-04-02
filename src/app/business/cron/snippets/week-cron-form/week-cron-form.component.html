@@ -1,0 +1,103 @@
+<form nz-form [formGroup]="editForm" (ngSubmit)="submitCronDataItemDto($event)" nzLayout="horizontal">
+  <nz-radio-group [ngStyle]='style' formControlName="cronType" (ngModelChange)="cronTypeChange($event)">
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan='4'>
+        <label nz-radio nzValue="every"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <nz-form-text>
+          每一天
+        </nz-form-text>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="interval"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>每隔 &nbsp;</span>
+        <nz-input-number formControlName='incrementStart' nzMin=1 [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number>
+        <span>{{nzCronTypeCN}}执行 &nbsp;&nbsp;从第</span>
+        <nz-input-number formControlName='incrementInterval' nzMin=1 [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number>
+        <span>{{nzCronTypeCN}}开始</span>
+      </nz-form-control>
+    </nz-form-item> -->
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="spcifyArray"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <div>
+          <span>具体天数(可多选) &nbsp;</span>
+          <nz-select style='min-width: 240px;' formControlName='spcifyArray' name='spcifyArray' nzPlaceHolder='点击选择'
+            nzMode="multiple" (ngModelChange)='selectChange($event)' nzAllowClear nzShowSearch>
+            <nz-option *ngFor='let item of weekDataset' [nzLabel]='item.name' [nzValue]='item.value'>
+            </nz-option>
+          </nz-select>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="range"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>周期从 &nbsp;</span>
+        <!-- <nz-input-number formControlName='rangeStart' nzMin=1 [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
+                </nz-input-number> -->
+        <nz-select formControlName='rangeStart' name='rangeStart' nzPlaceHolder='请选择' nzAllowClear
+          (ngModelChange)="inputNumberChange($event)">
+          <nz-option *ngFor='let item of weekDataset' [nzLabel]='item.name' [nzValue]='item.value'>
+          </nz-option>
+        </nz-select>
+        <span>&nbsp;到&nbsp;</span>
+        <!-- <nz-input-number formControlName='rangeEnd' nzMin=1 [nzMax]='nzMax' (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number> -->
+        <nz-select formControlName='rangeEnd' name='rangeEnd' nzPlaceHolder='请选择' nzAllowClear
+          (ngModelChange)="inputNumberChange($event)">
+          <nz-option *ngFor='let item of weekDataset' [nzLabel]='item.name' [nzValue]='item.value'>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="lastDay"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>本月最后一个</span>
+        <nz-select formControlName='lastWeekday' name='lastWeekday' nzPlaceHolder='请选择' nzAllowClear
+          (ngModelChange)="inputNumberChange($event)">
+          <nz-option *ngFor='let item of weekDataset' [nzLabel]='item.name' [nzValue]='item.value'>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="lastWorkday"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>本月第</span>
+        <nz-input-number formControlName='weekIndex' nzMin=1 [nzMax]='5' (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number>
+        <span>个</span>
+        <nz-select formControlName='weekDay' name='weekDay' nzPlaceHolder='请选择' nzAllowClear
+          (ngModelChange)="inputNumberChange($event)">
+          <nz-option *ngFor='let item of weekDataset' [nzLabel]='item.name' [nzValue]='item.value'>
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-radio-group>
+</form>

@@ -60,66 +60,30 @@
       </nz-form-control>
     </nz-form-item>
 
-    <!-- <nz-form-item>
-      <nz-form-label>高级选项</nz-form-label>
-    </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="lastDay"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>距本月底前</span>
+        <nz-input-number formControlName='endOfMonth' nzMin=1 [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number>
+        <span>天</span>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" nzSpan="4">
+        <label nz-radio nzValue="lastWorkday"></label>
+      </nz-form-label>
+      <nz-form-control nzSpan="16">
+        <span>距离</span>
+        <nz-input-number formControlName='dayOfMonth' nzMin=1 [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
+        </nz-input-number>
+        <span>日最近的工作日</span>
+      </nz-form-control>
+    </nz-form-item>
   </nz-radio-group>
-
-
-  <!-- <nz-form-item>
-    <nz-form-label nzNoColon="true" nzSpan='3'>
-      <label nz-checkbox></label>
-    </nz-form-label>
-    <nz-form-control nzSpan="14">
-      <nz-form-text>
-        每一秒钟
-      </nz-form-text>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label nzNoColon="true" nzSpan="3">
-      <label nz-checkbox></label>
-    </nz-form-label>
-    <nz-form-control nzSpan="14">
-      <span>每隔 &nbsp;</span>
-      <nz-input-number formControlName='incrementStart' nzMin=1 [nzMax]='nzMax'>
-      </nz-input-number>
-      <span>执行 &nbsp;&nbsp;从第</span>
-      <nz-input-number formControlName='incrementInterval' nzMin=1 [nzMax]='nzMax'>
-      </nz-input-number>
-      <span>开始</span>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label nzNoColon="true" nzSpan="3">
-      <label nz-checkbox></label>
-    </nz-form-label>
-    <nz-form-control nzSpan="14">
-      <div>
-        <span>具体秒数(可多选) &nbsp;</span>
-        <nz-select formControlName='specifiedArray' name='specifiedArray' nzPlaceHolder='点击选择' nzMode="multiple"
-          nzAllowClear nzShowSearch>
-          <nz-option *ngFor='let item of dataset' [nzLabel]='item' [nzValue]='item'>
-          </nz-option>
-        </nz-select>
-      </div>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label nzNoColon="true" nzSpan="3">
-      <label nz-checkbox></label>
-    </nz-form-label>
-    <nz-form-control nzSpan="14">
-      <span>周期从 &nbsp;</span>
-      <nz-input-number formControlName='rangeStart' nzMin=1 [nzMax]='nzMax'>
-      </nz-input-number>
-      <span>&nbsp;到&nbsp;</span>
-      <nz-input-number formControlName='rangeEnd' nzMin=1 [nzMax]='nzMax'>
-      </nz-input-number>
-      <span>秒</span>
-    </nz-form-control>
-  </nz-form-item> -->
 </form>

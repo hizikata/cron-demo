@@ -1,26 +1,32 @@
 <div class='whole-area'>
   <div class='cron'>
     <h1>ng-cron</h1>
-    <input class='cron_input' nz-input [(ngModel)]="cronExpress" id="cronExpress" name="cronExpress"
-      placeholder="* * * * * ? *">
+    <div>
+      <input class='cron_input' nz-input [(ngModel)]="cronExpress" id="cronExpress" name="cronExpress"
+        placeholder="* * * * * ? * (按Enter解析)" (keypress.enter)='analysisCronExpress()'>
+    </div>
     <div class='cron_tabs card-container'>
-      <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+      <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzTabPosition]="'top'" [nzType]="'card'">
         <nz-tab [nzTitle]="secondTitleTpl">
           <ng-template #secondTitleTpl>
             <i nz-icon nzType='calendar' nzTheme='outline'></i>
             <span>秒</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-            <app-basic-cron-form></app-basic-cron-form>
+            <app-basic-cron-form [nzData]='secondValue' nzCronPosition='second'
+              (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="minuteTitleTpl">
           <ng-template #minuteTitleTpl>
             <i nz-icon nzType='calendar' nzTheme='outline'></i>
-            <span>分</span>
+            <span>分钟</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-
+            <app-basic-cron-form [nzData]='minuteValue' nzCronPosition='minute'
+              (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="hourTitleTpl">
@@ -29,7 +35,9 @@
             <span>时</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-
+            <app-basic-cron-form [nzData]='hourValue' nzCronPosition='hour'
+              (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="dayTitleTpl">
@@ -38,7 +46,10 @@
             <span>天</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-
+            <!-- <app-basic-cron-form [nzData]='dayValue' nzCronPosition='day' (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form> -->
+            <app-day-cron-form [nzData]='dayValue' (nzCronValueChange)='cronValueChange($event)'>
+            </app-day-cron-form>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="monthTitleTpl">
@@ -47,7 +58,18 @@
             <span>月</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-
+            <app-basic-cron-form [nzData]='monthValue' nzCronPosition='month'
+              (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form>
+          </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="weekTitleTpl">
+          <ng-template #weekTitleTpl>
+            <i nz-icon nzType='calendar' nzTheme='outline'></i>
+            <span>周</span>
+          </ng-template>
+          <div class='cron_tabs_tabContent'>
+            <app-week-cron-form [nzData]='weekValue' (nzCronValueChange)='cronValueChange($event)'></app-week-cron-form>
           </div>
         </nz-tab>
         <nz-tab [nzTitle]="yearTitleTpl">
@@ -56,10 +78,19 @@
             <span>年</span>
           </ng-template>
           <div class='cron_tabs_tabContent'>
-
+            <app-basic-cron-form [nzData]='yearValue' nzCronPosition='year'
+              (nzCronValueChange)='cronValueChange($event)'>
+            </app-basic-cron-form>
           </div>
         </nz-tab>
       </nz-tabset>
+      <div class='cron_tabs_bottom'>
+        <h2 style='margin-right: 8px;'>{{tempCronExpress}}</h2>
+        <button nz-button nzType='primary' type='button' (click)="saveCronExpress()"><i nz-icon nzType='save'
+            nzTheme='outline'></i>保存</button>
+        <button nz-button nzType='danger' type='button' (click)="resetCronExpress()"><i nz-icon nzType='delete'
+            nzTheme='outline'></i>清空</button>
+      </div>
     </div>
   </div>
 </div>

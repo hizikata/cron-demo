@@ -3,14 +3,14 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { CronDataItemDto, CronTypeDto, CronTypeEnum, CronPositionDto, CommonValueDto, CRON_TYPE_MAPPED } from '../../cron-models';
 
 @Component({
-  selector: 'app-basic-cron-form',
-  templateUrl: './basic-cron-form.component.html',
-  styleUrls: ['./basic-cron-form.component.less']
+  selector: 'app-day-cron-form',
+  templateUrl: './day-cron-form.component.html',
+  styleUrls: ['./day-cron-form.component.less']
 })
-export class BasicCronFormComponent implements OnInit {
+export class DayCronFormComponent implements OnInit {
 
   @Input() nzData: string;
-  @Input() nzCronPosition: CronPositionDto;  // 'second'|'minute'等等
+  nzCronPosition: CronPositionDto = 'day';  // 'second'|'minute'等等
   @Output() nzCronValueChange = new EventEmitter<CommonValueDto>();
 
   nzMax: number;
@@ -43,7 +43,7 @@ export class BasicCronFormComponent implements OnInit {
 
   private initData() {
     this.nzData = this.nzData || '*';
-    this.nzCronPosition = this.nzCronPosition || 'second';
+    // this.nzCronPosition = this.nzCronPosition || 'second';
     const tempMax = CRON_TYPE_MAPPED[this.nzCronPosition].max;
     this.nzMax = tempMax || 12;
     this.nzCronTypeCN = CRON_TYPE_MAPPED[this.nzCronPosition].cnType;
@@ -55,12 +55,15 @@ export class BasicCronFormComponent implements OnInit {
   createCronDataItemDto(dto?: CronDataItemDto) {
     this.editForm = this.fb.group({
       cronType: ['every'],
-      cronEvery: [null],
+      // cronEvery: [null],
       incrementStart: [1],
       incrementInterval: [2],
       rangeStart: [1],
       rangeEnd: [7],
       spcifyArray: [[]],
+
+      dayOfMonth: [1], // 距离月底多少天
+      endOfMonth: [1]
 
       // cronEvery: [''],
       // incrementType: this.fb.group({
@@ -93,6 +96,18 @@ export class BasicCronFormComponent implements OnInit {
       case CronTypeEnum.every:
         this.nzData = '*';
         break;
+      case CronTypeEnum.lastDay:
+        const lastDay = this.editForm.get('endOfMonth').value;
+        if (lastDay === '1') {
+          this.nzData = 'L';
+        } else {
+          this.nzData = `L-${lastDay}`;
+        }
+        break;
+      case CronTypeEnum.lastWorkday:
+        const lastWeekday = this.editForm.get('dayOfMonth').value;
+        this.nzData = `${lastWeekday}W`;
+        break;
       case CronTypeEnum.interval:
         const incrementStart = this.editForm.get('incrementStart').value || 1;
         const incrementInterval = this.editForm.get('incrementInterval').value || 2;
@@ -124,7 +139,7 @@ export class BasicCronFormComponent implements OnInit {
   }
 
   selectChange($event) {
-    // console.log($event);
+    console.log($event);
     const type = this.editForm.get('cronType').value;
     this.cronTypeChange(type);
   }
@@ -135,13 +150,20 @@ export class BasicCronFormComponent implements OnInit {
         this.disabledEditForm();
         break;
       case 'interval':
-        this.disabledEditForm(['rangeStart', 'rangeEnd', 'spcifyArray']);
+        this.disabledEditForm(['rangeStart', 'rangeEnd', 'spcifyArray', 'dayOfMonth', 'endOfMonth']);
         break;
       case 'range':
-        this.disabledEditForm(['incrementStart', 'incrementInterval', 'spcifyArray']);
+        this.disabledEditForm(['incrementStart', 'incrementInterval', 'spcifyArray', 'dayOfMonth', 'endOfMonth']);
         break;
       case 'spcifyArray':
-        this.disabledEditForm(['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd']);
+        this.disabledEditForm(['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd', 'dayOfMonth', 'endOfMonth']);
+        break;
+
+      case 'lastDay':
+        this.disabledEditForm(['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd', 'spcifyArray', 'dayOfMonth']);
+        break;
+      case 'lastWorkday':
+        this.disabledEditForm(['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd', 'spcifyArray', 'endOfMonth']);
         break;
       default:
         break;
@@ -154,7 +176,8 @@ export class BasicCronFormComponent implements OnInit {
         this.editForm.controls[key].enable();
       }
     }
-    controlArray = controlArray || ['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd', 'spcifyArray'];
+    controlArray = controlArray ||
+      ['incrementStart', 'incrementInterval', 'rangeStart', 'rangeEnd', 'spcifyArray', 'dayOfMonth', 'endOfMonth'];
     controlArray.forEach(ele => {
       if (this.editForm.contains(ele)) {
         this.editForm.controls[ele].disable();
@@ -189,12 +212,22 @@ export class BasicCronFormComponent implements OnInit {
         break;
     }
   }
-
+  /** 解析值 */
   private analysisCronData(value: string) {
     let tempArray: string[] = [];
     switch (true) {
       case value === '*':
         this.setEditFormCronType(CronTypeEnum.every);
+        break;
+      case value.includes('L'):
+        this.setEditFormCronType(CronTypeEnum.lastDay);
+        tempArray = value.split('-');
+        this.setEditFormControl('endOfMonth', tempArray[1]);
+        break;
+      case value.includes('W'):
+        this.setEditFormCronType(CronTypeEnum.lastWorkday);
+        tempArray = value.split('');
+        this.setEditFormControl('dayOfMonth', tempArray[0]);
         break;
       case value.includes('/'):
         this.setEditFormCronType(CronTypeEnum.interval);
@@ -246,6 +279,5 @@ export class BasicCronFormComponent implements OnInit {
       this.editForm.get(controlName).setValue(value);
     }
   }
-
 
 }

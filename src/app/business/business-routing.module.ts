@@ -5,15 +5,15 @@ import { BusinessFactoryComponent } from './business-factory/business-factory.co
 
 const routes: Routes = [
   {
-    // path: '',
-    // component: BusinessFactoryComponent,
-    // children: [
-    //   { path: 'cron', component: CronDemoComponent },
-    //   { path: '', redirectTo: './cron', pathMatch: 'full' }
-    // ]
-    path: 'cron', component: CronDemoComponent
-  },
-  { path: '', redirectTo: './cron', pathMatch: 'full' }
+    path: '',
+    component: BusinessFactoryComponent,
+    children: [
+      { path: 'cron', component: CronDemoComponent },
+      { path: '', redirectTo: './cron', pathMatch: 'full' }
+    ]
+  }
+  // {path:'cron',component:CronDemoComponent},
+  // { path: '', redirectTo: './cron', pathMatch: 'full' }
 ];
 
 @NgModule({

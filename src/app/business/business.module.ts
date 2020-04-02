@@ -4,6 +4,8 @@ import { BusinessRoutingModule } from './business-routing.module';
 import { BusinessFactoryComponent } from './business-factory/business-factory.component';
 import { SharedModule } from '../shared/shared.module';
 import { BasicCronFormComponent } from './cron/snippets/basic-cron-form/basic-cron-form.component';
+import { DayCronFormComponent } from './cron/snippets/day-cron-form/day-cron-form.component';
+import { WeekCronFormComponent } from './cron/snippets/week-cron-form/week-cron-form.component';
 
 @NgModule({
   imports: [
@@ -13,7 +15,9 @@ import { BasicCronFormComponent } from './cron/snippets/basic-cron-form/basic-cr
   declarations: [
     CronDemoComponent,
     BusinessFactoryComponent,
-    BasicCronFormComponent
+    BasicCronFormComponent,
+    DayCronFormComponent,
+    WeekCronFormComponent
   ],
   providers: [],
   exports: []
