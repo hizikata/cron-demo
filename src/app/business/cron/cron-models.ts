@@ -24,6 +24,7 @@ export class CronDataItemDto {
     /** 最大值 */
     public max?: number,
     /** 没有间隔 */
+    public min?: number
   ) { }
 }
 
@@ -73,7 +74,9 @@ export const CRON_TYPE_MAPPED: CronDataDto = {
     max: 12
   },
   year: {
-    cnType: '年'
+    cnType: '年',
+    min: new Date(Date.now()).getFullYear(),
+    max: new Date(Date.now()).getFullYear() + 30
   }
 };
 

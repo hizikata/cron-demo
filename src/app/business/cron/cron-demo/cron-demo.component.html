@@ -3,7 +3,7 @@
     <h1>ng-cron</h1>
     <div>
       <input class='cron_input' nz-input [(ngModel)]="cronExpress" id="cronExpress" name="cronExpress"
-        placeholder="* * * * * ? * (按Enter解析)" (keypress.enter)='analysisCronExpress()'>
+        placeholder="* * * * * ? * (按Enter解析)" (keydown.enter)='analysisCronExpress()'>
     </div>
     <div class='cron_tabs card-container'>
       <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzTabPosition]="'top'" [nzType]="'card'">

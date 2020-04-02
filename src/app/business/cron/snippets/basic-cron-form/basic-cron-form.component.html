@@ -17,11 +17,11 @@
       </nz-form-label>
       <nz-form-control nzSpan="16">
         <span>每隔 &nbsp;</span>
-        <nz-input-number formControlName='incrementStart' nzMin=1 [nzMax]='nzMax'
+        <nz-input-number formControlName='incrementInterval' nzMin=1 [nzMax]='nzMax'
           (ngModelChange)='inputNumberChange($event)'>
         </nz-input-number>
         <span>{{nzCronTypeCN}}执行 &nbsp;&nbsp;从第</span>
-        <nz-input-number formControlName='incrementInterval' nzMin=1 [nzMax]='nzMax'
+        <nz-input-number formControlName='incrementStart' nzMin=1 [nzMax]='nzMax'
           (ngModelChange)='inputNumberChange($event)'>
         </nz-input-number>
         <span>{{nzCronTypeCN}}开始</span>
@@ -50,11 +50,12 @@
       </nz-form-label>
       <nz-form-control nzSpan="16">
         <span>周期从 &nbsp;</span>
-        <nz-input-number formControlName='rangeStart' nzMin=1 [nzMax]='nzMax'
+        <nz-input-number formControlName='rangeStart' [nzMin]='nzMin' [nzMax]='nzMax'
           (ngModelChange)='inputNumberChange($event)'>
         </nz-input-number>
         <span>&nbsp;到&nbsp;</span>
-        <nz-input-number formControlName='rangeEnd' nzMin=1 [nzMax]='nzMax' (ngModelChange)='inputNumberChange($event)'>
+        <nz-input-number formControlName='rangeEnd' [nzMin]='nzMin' [nzMax]='nzMax'
+          (ngModelChange)='inputNumberChange($event)'>
         </nz-input-number>
         <span>{{nzCronTypeCN}}</span>
       </nz-form-control>

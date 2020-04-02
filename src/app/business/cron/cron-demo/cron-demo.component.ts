@@ -1,6 +1,7 @@
 import { CronPositionDto } from './../cron-models';
 import { Component, OnInit } from '@angular/core';
 import { CommonValueDto } from '../cron-models';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-cron-demo',
@@ -9,7 +10,7 @@ import { CommonValueDto } from '../cron-models';
 })
 export class CronDemoComponent implements OnInit {
 
-  cronExpress = '* * * ? * 1,2,3,4 *';
+  cronExpress = '';
 
   tempCronExpress: string; // 1-7 * * * * ? *   * * * * * ? *
   selectedIndex = 0;
@@ -22,7 +23,9 @@ export class CronDemoComponent implements OnInit {
   weekValue: string;
   yearValue: string;
 
-  constructor() { }
+  constructor(
+    public message: NzMessageService
+  ) { }
 
   ngOnInit(): void {
     this.tempCronExpress = this.cronExpress || '* * * * * ? *';
@@ -65,10 +68,26 @@ export class CronDemoComponent implements OnInit {
   resetCronExpress() {
     this.cronExpress = '';
     this.tempCronExpress = '* * * * * ? *';
+    this.analysisCronExpress();
   }
 
   analysisCronExpress() {
+    if (!this.validateCronExpress(this.cronExpress)) {
+      this.tempCronExpress = '* * * * * ? *';
+      return;
+    }
+    // this.tempCronExpress = this.cronExpress;
+    this.setAllTypeValue();
+  }
 
+  private validateCronExpress(cronExp: string) {
+    cronExp = cronExp || '* * * * * ? *';
+    const temp = cronExp.split(' ');
+    if (!temp || temp.length !== 6 && temp.length !== 7) {
+      this.message.warning('非法的cron表达式，请检查后重试！');
+      return false;
+    }
+    return true;
   }
 
   private cronHandler(index: number, value: string, type?: CronPositionDto) {

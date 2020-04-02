@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CronDataItemDto, CronTypeDto, CronTypeEnum, CronPositionDto, CommonValueDto, CRON_TYPE_MAPPED } from '../../cron-models';
 
@@ -7,13 +7,14 @@ import { CronDataItemDto, CronTypeDto, CronTypeEnum, CronPositionDto, CommonValu
   templateUrl: './basic-cron-form.component.html',
   styleUrls: ['./basic-cron-form.component.less']
 })
-export class BasicCronFormComponent implements OnInit {
+export class BasicCronFormComponent implements OnInit, OnChanges {
 
   @Input() nzData: string;
   @Input() nzCronPosition: CronPositionDto;  // 'second'|'minute'等等
   @Output() nzCronValueChange = new EventEmitter<CommonValueDto>();
 
   nzMax: number;
+  nzMin: number;
   /** 可选择的数据 */
   dataset: number[] = [];
   /** 根据类型显示的中文名称 */
@@ -30,49 +31,69 @@ export class BasicCronFormComponent implements OnInit {
   editForm: FormGroup;
   editDto: CronDataItemDto;
 
+  currentYear = new Date(Date.now()).getFullYear();
+
   constructor(
     public fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
-    this.createCronDataItemDto();
-
     this.initData();
     this.refreshEditFormStatus();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    // Add '${implements OnChanges}' to the class.
+    // console.log(changes);
+    setTimeout(() => {
+      for (const key in changes) {
+        if (key === 'nzData' && changes[key].currentValue) {
+          const currentValue = changes[key].currentValue;
+          this.analysisCronData(this.nzData);
+        }
+      }
+    });
   }
 
   private initData() {
     this.nzData = this.nzData || '*';
     this.nzCronPosition = this.nzCronPosition || 'second';
     const tempMax = CRON_TYPE_MAPPED[this.nzCronPosition].max;
+    const tempMin = CRON_TYPE_MAPPED[this.nzCronPosition].min;
     this.nzMax = tempMax || 12;
+    this.nzMin = tempMin || 1;
     this.nzCronTypeCN = CRON_TYPE_MAPPED[this.nzCronPosition].cnType;
+
+    this.createCronDataItemDto();
 
     this.initMaxData(this.nzCronPosition);
     this.analysisCronData(this.nzData);
   }
 
   createCronDataItemDto(dto?: CronDataItemDto) {
-    this.editForm = this.fb.group({
-      cronType: ['every'],
-      cronEvery: [null],
-      incrementStart: [1],
-      incrementInterval: [2],
-      rangeStart: [1],
-      rangeEnd: [7],
-      spcifyArray: [[]],
+    if (this.nzCronPosition === 'year') {
+      this.editForm = this.fb.group({
+        cronType: ['every'],
+        cronEvery: [null],
+        incrementStart: [this.currentYear],
+        incrementInterval: [1],
+        rangeStart: [this.currentYear],
+        rangeEnd: [this.currentYear + 1],
+        spcifyArray: [[]],
+      });
+    } else {
+      this.editForm = this.fb.group({
+        cronType: ['every'],
+        cronEvery: [null],
+        incrementStart: [1],
+        incrementInterval: [2],
+        rangeStart: [1],
+        rangeEnd: [7],
+        spcifyArray: [[]],
+      });
+    }
 
-      // cronEvery: [''],
-      // incrementType: this.fb.group({
-      //   incrementStart: [1],
-      //   incrementInterval: [2]
-      // }),
-      // rangeType: this.fb.group({
-      //   rangeStart: [1],
-      //   rangeEnd: [7]
-      // }),
-      // specifyArray: [[]]
-    });
   }
 
   submitCronDataItemDto(event: Event) {
