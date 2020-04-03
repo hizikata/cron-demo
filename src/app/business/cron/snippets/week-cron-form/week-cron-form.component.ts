@@ -153,7 +153,7 @@ export class WeekCronFormComponent implements OnInit {
   refreshEditFormStatus() {
     switch (this.cronType) {
       case 'every':
-        this.enabledEditForm();
+        this.enabledEditForm(['cronType']);
         break;
       // case 'interval':
       //   this.enabledEditForm(['rangeStart', 'rangeEnd', 'spcifyArray', 'dayOfMonth', 'endOfMonth']);
@@ -208,6 +208,14 @@ export class WeekCronFormComponent implements OnInit {
     //     this.editForm.controls[ele].disable();
     //   }
     // });
+  }
+
+  disableEditForm() {
+    for (const key in this.editForm.controls) {
+      if (this.editForm.controls.hasOwnProperty(key) && key !== 'cronType') {
+        this.editForm.controls[key].disable();
+      }
+    }
   }
 
 

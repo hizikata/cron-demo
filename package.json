@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-gitpage":"ng build --prod --output-path docs --base-href /cron-demo/"
+    "build-gitpage":"ng build --prod --output-path docs --base-href /cron-demo/",
+    "build-prod":"ng build --prod"
   },
   "private": true,
   "dependencies": {

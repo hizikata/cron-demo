@@ -95,7 +95,7 @@ export class CronDemoComponent implements OnInit {
     if (type === 'day') {
       array[5] = '?';
     }
-    if (type === 'week' && array[3] !== '*') {
+    if (type === 'week' && (array[3] !== '*' || value !== '?')) {
       array[3] = '?';
     }
     array[index] = value;
